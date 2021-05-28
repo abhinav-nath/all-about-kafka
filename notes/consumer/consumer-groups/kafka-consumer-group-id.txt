@@ -1,0 +1,23 @@
+Consumer Groups
+
+group.id is a mandatory attribute to start up a Consumer.
+
+group.id plays a significant role when it comes to scalable message consumption.
+
+View the Consumer groups:
+
+C:\kafka_2.13-2.8.0\bin\windows>kafka-consumer-groups.bat --bootstrap-server localhost:9092 --list
+console-consumer-51813
+
+^
+This is the consumer group that is automatically created when you start a Console Consumer.
+
+
+Create two Consumers with the same group id:
+
+C:\kafka_2.13-2.8.0\bin\windows>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --group group-1
+
+C:\kafka_2.13-2.8.0\bin\windows>kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic test-topic --group group-1
+
+
+So one Consumer will read from 2 partitions and another will read from other 2 partitions.
