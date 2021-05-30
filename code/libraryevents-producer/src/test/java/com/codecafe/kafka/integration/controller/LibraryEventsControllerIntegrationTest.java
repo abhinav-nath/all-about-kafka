@@ -35,7 +35,7 @@ import com.codecafe.kafka.model.LibraryEvent;
 @EmbeddedKafka(topics = {"library-events"}, partitions = 3)
 @TestPropertySource(properties = {"spring.kafka.producer.bootstrap-servers=${spring.embedded.kafka.brokers}",
 "spring.kafka.admin.properties.bootstrap-servers=${spring.embedded.kafka.brokers}"})
-public class LibraryEventsControllerEventsTest {
+public class LibraryEventsControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
