@@ -1,5 +1,8 @@
 package com.codecafe.kafka.producer;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -23,7 +26,8 @@ public class LibraryEventProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void sendLibraryEvent(LibraryEvent libraryEvent) throws JsonProcessingException {
+    // method 1 - async mechanism using callback
+    public void sendLibraryEventAsync(LibraryEvent libraryEvent) throws JsonProcessingException {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
@@ -57,6 +61,27 @@ public class LibraryEventProducer {
         } catch (Throwable throwable) {
             log.error("Error in method onFailure : {}", throwable.getMessage());
         }
+    }
+
+    // method 2 - sync mechanism
+    public SendResult<Integer, String> sendLibraryEventSync(LibraryEvent libraryEvent) throws Exception {
+
+        Integer key = libraryEvent.getLibraryEventId();
+        String value = objectMapper.writeValueAsString(libraryEvent);
+
+        SendResult<Integer, String> sendResult = null;
+
+        try {
+            sendResult = kafkaTemplate.sendDefault(key, value).get(1, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("InterruptedException/ExecutionException while sending the message. Exception is : {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("Exception while sending the message. Exception is : {}", e.getMessage());
+            throw e;
+        }
+
+        return sendResult;
     }
 
 }
