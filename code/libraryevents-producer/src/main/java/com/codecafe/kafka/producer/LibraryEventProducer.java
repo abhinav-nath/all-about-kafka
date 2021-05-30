@@ -3,6 +3,7 @@ package com.codecafe.kafka.producer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -19,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class LibraryEventProducer {
+
+    private static final String TOPIC_NAME = "library-events";
 
     @Autowired
     private KafkaTemplate<Integer, String> kafkaTemplate;
@@ -72,7 +75,12 @@ public class LibraryEventProducer {
         SendResult<Integer, String> sendResult = null;
 
         try {
+
+            // sendDefault will use the default configured topic
+            // spring.kafka.template.default-topic=library-events
+
             sendResult = kafkaTemplate.sendDefault(key, value).get(1, TimeUnit.SECONDS);
+
         } catch (InterruptedException | ExecutionException e) {
             log.error("InterruptedException/ExecutionException while sending the message. Exception is : {}", e.getMessage());
             throw e;
@@ -82,6 +90,37 @@ public class LibraryEventProducer {
         }
 
         return sendResult;
+    }
+
+    // method 3 - using ProducerRecord
+    public SendResult<Integer, String> sendLibraryEventToTopic(LibraryEvent libraryEvent) throws Exception {
+
+        Integer key = libraryEvent.getLibraryEventId();
+        String value = objectMapper.writeValueAsString(libraryEvent);
+
+        ProducerRecord<Integer, String> producerRecord = buildProducerRecord(key, value);
+
+        SendResult<Integer, String> sendResult = null;
+
+        try {
+            // send() has the capability to send messages to a specific topic
+            // good practice is to create a ProducerRecord and pass it to send()
+
+            sendResult = kafkaTemplate.send(producerRecord).get(1, TimeUnit.SECONDS);
+
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("InterruptedException/ExecutionException while sending the message. Exception is : {}", e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("Exception while sending the message. Exception is : {}", e.getMessage());
+            throw e;
+        }
+
+        return sendResult;
+    }
+
+    private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value) {
+        return new ProducerRecord<>(TOPIC_NAME, null, key, value, null);
     }
 
 }
