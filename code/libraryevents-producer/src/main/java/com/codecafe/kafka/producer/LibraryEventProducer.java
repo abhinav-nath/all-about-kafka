@@ -33,13 +33,18 @@ public class LibraryEventProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // method 1 - async mechanism using callback
-    public void sendLibraryEventAsync(LibraryEvent libraryEvent) throws JsonProcessingException {
+    // method 1 - async mechanism using callback and ProducerRecord
+    public ListenableFuture<SendResult<Integer, String>> sendLibraryEventAsync(LibraryEvent libraryEvent) throws JsonProcessingException {
 
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
 
-        ListenableFuture<SendResult<Integer, String>> listenableFuture = kafkaTemplate.sendDefault(key, value);
+        ProducerRecord<Integer, String> producerRecord = buildProducerRecord(key, value);
+
+        // send() has the capability to send messages to a specific topic
+        // good practice is to create a ProducerRecord and pass it to send()
+
+        ListenableFuture<SendResult<Integer, String>> listenableFuture = kafkaTemplate.send(producerRecord);
 
         listenableFuture.addCallback(new ListenableFutureCallback<SendResult<Integer, String>>() {
 
@@ -54,6 +59,8 @@ public class LibraryEventProducer {
             }
 
         });
+
+        return listenableFuture;
     }
 
     private void handleResult(Integer key, String value, SendResult<Integer, String> result) {
@@ -76,6 +83,8 @@ public class LibraryEventProducer {
         Integer key = libraryEvent.getLibraryEventId();
         String value = objectMapper.writeValueAsString(libraryEvent);
 
+        ProducerRecord<Integer, String> producerRecord = buildProducerRecord(key, value);
+
         SendResult<Integer, String> sendResult = null;
 
         try {
@@ -83,32 +92,7 @@ public class LibraryEventProducer {
             // sendDefault will use the default configured topic
             // spring.kafka.template.default-topic=library-events
 
-            sendResult = kafkaTemplate.sendDefault(key, value).get(1, TimeUnit.SECONDS);
-
-        } catch (InterruptedException | ExecutionException e) {
-            log.error("InterruptedException/ExecutionException while sending the message. Exception is : {}", e.getMessage());
-            throw e;
-        } catch (Exception e) {
-            log.error("Exception while sending the message. Exception is : {}", e.getMessage());
-            throw e;
-        }
-
-        return sendResult;
-    }
-
-    // method 3 - using ProducerRecord
-    public SendResult<Integer, String> sendLibraryEventToTopic(LibraryEvent libraryEvent) throws Exception {
-
-        Integer key = libraryEvent.getLibraryEventId();
-        String value = objectMapper.writeValueAsString(libraryEvent);
-
-        ProducerRecord<Integer, String> producerRecord = buildProducerRecord(key, value);
-
-        SendResult<Integer, String> sendResult = null;
-
-        try {
-            // send() has the capability to send messages to a specific topic
-            // good practice is to create a ProducerRecord and pass it to send()
+            // sendResult = kafkaTemplate.sendDefault(key, value).get(1, TimeUnit.SECONDS);
 
             sendResult = kafkaTemplate.send(producerRecord).get(1, TimeUnit.SECONDS);
 

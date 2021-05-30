@@ -1,9 +1,9 @@
 package com.codecafe.kafka.unit.controller;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.DisplayName;
@@ -50,7 +50,7 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
 
         mockMvc.perform(post("/v1/libraryevent")
                 .content(json)
@@ -69,7 +69,7 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
 
         String expectedErrorMessage = "book - must not be null";
 
@@ -87,7 +87,7 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
 
         mockMvc.perform(post("/v1/libraryevent")
                 .content(json)
@@ -112,8 +112,8 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
-        
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
+
         String expectedErrorMessage = "book.bookId - must not be null";
 
         testBadRequestError(json, expectedErrorMessage);
@@ -136,7 +136,7 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
 
         String expectedErrorMessage = "book.bookName - must not be blank";
 
@@ -160,7 +160,7 @@ public class LibraryEventsControllerUnitTest {
 
         String json = objectMapper.writeValueAsString(libraryEvent);
 
-        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+        when(libraryEventProducer.sendLibraryEventAsync(isA(LibraryEvent.class))).thenReturn(null);
 
         String expectedErrorMessage = "book.bookId - must not be null, book.bookName - must not be blank";
 

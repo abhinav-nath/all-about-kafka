@@ -33,8 +33,6 @@ public class LibraryEventsController {
         libraryEventProducer.sendLibraryEventAsync(libraryEvent);
 
         //SendResult<Integer, String> sendResult = libraryEventProducer.sendLibraryEventSync(libraryEvent);
-
-        //SendResult<Integer, String> sendResult = libraryEventProducer.sendLibraryEventToTopic(libraryEvent);
         //log.info("sendResult is : {}", sendResult.toString());
 
         log.info("after sendLibraryEvent");
