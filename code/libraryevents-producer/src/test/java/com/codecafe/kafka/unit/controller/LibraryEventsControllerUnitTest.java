@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -54,6 +55,44 @@ public class LibraryEventsControllerUnitTest {
                 .content(json)
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated());
+    }
+    
+    @Test
+    @DisplayName("bookObjectCannotBeNull")
+    void createLibraryEvent_NullBook() throws Exception {
+
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                                                .libraryEventId(null)
+                                                .book(null)
+                                                .build();
+
+        String json = objectMapper.writeValueAsString(libraryEvent);
+
+        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+
+        mockMvc.perform(post("/v1/libraryevent")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("bookObjectCannotBeEmpty")
+    void createLibraryEvent_EmptyBook() throws Exception {
+
+        LibraryEvent libraryEvent = LibraryEvent.builder()
+                                                .libraryEventId(null)
+                                                .book(new Book())
+                                                .build();
+
+        String json = objectMapper.writeValueAsString(libraryEvent);
+
+        doNothing().when(libraryEventProducer).sendLibraryEventAsync(isA(LibraryEvent.class));
+
+        mockMvc.perform(post("/v1/libraryevent")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest());
     }
 
 }
