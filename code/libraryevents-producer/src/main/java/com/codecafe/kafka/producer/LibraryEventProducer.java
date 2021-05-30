@@ -1,9 +1,13 @@
 package com.codecafe.kafka.producer;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.header.Header;
+import org.apache.kafka.common.header.internals.RecordHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -120,7 +124,12 @@ public class LibraryEventProducer {
     }
 
     private ProducerRecord<Integer, String> buildProducerRecord(Integer key, String value) {
-        return new ProducerRecord<>(TOPIC_NAME, null, key, value, null);
+
+        // add headers to the message
+        List<Header> recordHeaders = List.of(new RecordHeader("event-source", "scanner".getBytes()),
+                new RecordHeader("event-timestamp", LocalDate.now().toString().getBytes()));
+
+        return new ProducerRecord<>(TOPIC_NAME, null, key, value, recordHeaders);
     }
 
 }
