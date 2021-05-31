@@ -1,4 +1,4 @@
-package com.codecafe.kafka.entity;
+package com.codecafe.kafka.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
