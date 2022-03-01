@@ -27,7 +27,7 @@ public class Producer {
 
     public void produceMessages() {
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        for (int i = 1; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             producer.send(new ProducerRecord<>(topics, "apple", "this is message #" + i));
         }
         producer.close();

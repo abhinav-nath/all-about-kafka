@@ -8,15 +8,18 @@ import static com.codecafe.kafka.utils.Constants.BOOTSTRAP_SERVERS;
 public class RunApp {
 
     public static void main(String[] args) {
-        String topics = "TestTopic1";
+        String topics = "TestTopic5";
         String consumerGroup = "ConsumerGroup";
+        String diffConsumerGroup = "DiffConsumerGroup";
 
         Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
         Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
+        Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, diffConsumerGroup, topics);
 
         (new Thread(producer::produceMessages)).start();
 
         (new Thread(consumer1::consumeMessages)).start();
+        (new Thread(consumer2::consumeMessages)).start();
     }
 
 }
