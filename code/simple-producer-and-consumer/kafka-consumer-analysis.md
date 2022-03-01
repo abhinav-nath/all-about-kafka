@@ -1,4 +1,4 @@
-## Analysis of Kafka Consumer
+# Analysis of Kafka Consumer
 
 Create below components using the `docker-compose.yml`
 
@@ -12,7 +12,7 @@ docker-compose up -d
 
 !["Run docker-compose.yml"](./images/run-docker-compose.png "Run docker-compose.yml")
 
-### Case 1 : One Partition and One Consumer in One Consumer Group
+## Case 1 : One Partition and One Consumer in One Consumer Group
 Create a new topic named **TestTopic1** with **1 partition** from **Kafdrop** UI:
 
 !["Create a topic from Kafdrop"](./images/create-topic-in-kafdrop.png "Create a topic from Kafdrop")
@@ -45,7 +45,7 @@ Consumer1 - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 
 > **Observation**: As there is only one partition, it is assigned to the single consumer and thus Consumer1 receives all the messages.
 
-### Case 2 : Two Partitions and One Consumer in One Consumer Group
+## Case 2 : Two Partitions and One Consumer in One Consumer Group
 Create a new topic - **TestTopic2** with **2 partitions**:
 
 !["Create a topic with two partitions"](./images/create-topic-in-kafdrop_1.png "Create a topic with two partitions")
