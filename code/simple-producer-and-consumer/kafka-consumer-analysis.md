@@ -15,7 +15,8 @@ docker-compose up -d
 1. [One Partition and One Consumer in One Consumer Group](#case-1--one-partition-and-one-consumer-in-one-consumer-group)
 2. [Two Partitions and One Consumer in One Consumer Group](#case-2--two-partitions-and-one-consumer-in-one-consumer-group)
 3. [One Partition and Two Consumers in One Consumer Group](#case-3--one-partition-and-two-consumers-in-one-consumer-group)
-4. [One Partition and Two Consumers in Different Consumer Groups](#case-4--one-partition-and-two-consumers-in-different-consumer-groups)
+4. [Two Partitions and Two Consumers in One Consumer Group](#case-4--two-partitions-and-two-consumers-in-one-consumer-group)
+5. [One Partition and Two Consumers in Different Consumer Groups](#case-5--one-partition-and-two-consumers-in-different-consumer-groups)
 
 ## Case 1 : One Partition and One Consumer in One Consumer Group
 Create a new topic named **TestTopic1** with **1 partition** from **Kafdrop** UI:
@@ -176,7 +177,7 @@ Consumer2 - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 > So Consumer1 gets all the messages from Partition 0 and
 > Consumer2 gets all the messages from Partition 1.
 
-## Case 4 : One Partition and Two Consumers in Different Consumer Groups
+## Case 5 : One Partition and Two Consumers in Different Consumer Groups
 Create a new topic - **TestTopic5** with ** partition**:
 
 ![](./images/create-topic-in-kafdrop_4.png "Create a topic with two partitions")
