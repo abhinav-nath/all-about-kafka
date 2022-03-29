@@ -1,4 +1,4 @@
-package com.codecafe.kafka.non_blocking_retries.exponential;
+package com.codecafe.kafka.non_blocking_retries.fixed;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -29,7 +29,7 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
   private KafkaTemplate<String, String> kafkaTemplate;
 
   @Test
-  void testNonBlockingRetriesAndDltWithExponentialBackOff() {
+  void testNonBlockingRetriesAndDltWithFixedBackOff() {
     String productCode = "PR-01";
     String productJson = "{\"code\":\"" + productCode + "\"}";
 
@@ -43,7 +43,7 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
 
       assertThat(topics)
         .containsOnly(
-          "products", "products-retry-0", "products-retry-1", "products-retry-2", "products-dlt");
+          "products", "products-retry", "products-dlt");
     }
   }
 

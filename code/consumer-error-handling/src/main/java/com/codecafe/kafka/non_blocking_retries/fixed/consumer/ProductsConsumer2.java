@@ -1,4 +1,4 @@
-package com.codecafe.kafka.non_blocking_retries.exponential.consumer;
+package com.codecafe.kafka.non_blocking_retries.fixed.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -10,13 +10,13 @@ import static java.time.LocalDateTime.now;
 
 @Slf4j
 @Component
-public class ProductsConsumer {
+public class ProductsConsumer2 {
 
-  private static final String RETRY = "-retry-0";
+  private static final String RETRY = "-retry";
 
   private final KafkaTemplate<String, String> kafkaTemplate;
 
-  public ProductsConsumer(KafkaTemplate<String, String> kafkaTemplate) {
+  public ProductsConsumer2(KafkaTemplate<String, String> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }
 
