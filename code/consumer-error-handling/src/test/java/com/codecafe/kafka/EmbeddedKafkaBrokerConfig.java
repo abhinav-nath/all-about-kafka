@@ -1,4 +1,4 @@
-package com.codecafe.kafka.non_blocking_retries.exponential;
+package com.codecafe.kafka;
 
 import kafka.server.KafkaConfig;
 import org.springframework.beans.factory.annotation.Value;

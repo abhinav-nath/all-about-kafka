@@ -1,4 +1,4 @@
-package com.codecafe.kafka.non_blocking_retries;
+package com.codecafe.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

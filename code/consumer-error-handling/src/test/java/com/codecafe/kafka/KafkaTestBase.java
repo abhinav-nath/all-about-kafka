@@ -1,4 +1,4 @@
-package com.codecafe.kafka.non_blocking_retries.exponential;
+package com.codecafe.kafka;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
