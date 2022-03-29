@@ -1,4 +1,4 @@
-package com.codecafe.kafka.consumer;
+package com.codecafe.kafka.non_blocking_retries.exponential.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

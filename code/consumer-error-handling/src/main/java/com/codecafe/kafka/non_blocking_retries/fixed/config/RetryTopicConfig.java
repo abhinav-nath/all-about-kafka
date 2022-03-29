@@ -1,7 +1,5 @@
-package com.codecafe.kafka.config;
+package com.codecafe.kafka.non_blocking_retries.fixed.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.retrytopic.DestinationTopic;
 import org.springframework.kafka.retrytopic.RetryTopicConfiguration;
