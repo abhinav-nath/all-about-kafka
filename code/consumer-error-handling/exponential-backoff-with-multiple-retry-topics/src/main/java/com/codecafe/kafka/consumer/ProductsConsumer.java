@@ -2,8 +2,13 @@ package com.codecafe.kafka.consumer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.retrytopic.TopicSuffixingStrategy;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
 import static java.time.LocalDateTime.now;
@@ -12,34 +17,35 @@ import static java.time.LocalDateTime.now;
 @Component
 public class ProductsConsumer {
 
-  private static final String RETRY = "-retry-0";
-
-  private final KafkaTemplate<String, String> kafkaTemplate;
-
-  public ProductsConsumer(KafkaTemplate<String, String> kafkaTemplate) {
-    this.kafkaTemplate = kafkaTemplate;
-  }
-
+  @RetryableTopic(
+    attempts = "4",
+    backoff = @Backoff(delay = 1000, multiplier = 2.0),
+    autoCreateTopics = "false",
+    topicSuffixingStrategy = TopicSuffixingStrategy.SUFFIX_WITH_INDEX_VALUE)
   @KafkaListener(topics = "products")
   public void listen(ConsumerRecord<String, String> message) {
     try {
-      log.info("Received message with key : [{}], value : [{}], topic : [{}], at : [{}]",
+      log.info("Received message with key : [{}], value : [{}], topic : [{}], offset : [{}], at : [{}]",
         message.key(),
         message.value(),
         message.topic(),
+        message.offset(),
         now());
-      throw new RuntimeException("Failed to consume message : " + message.key() + " from topic : " + message.topic());
+
+      doSomething(message);
+
     } catch (Exception ex) {
-      log.error("Failed to consume message with key : [{}], value : [{}], topic : [{}], at : [{}]",
-        message.key(),
-        message.value(),
-        message.topic(),
-        now());
-
-      String productJson = "{\"code\":\"" + message.key() + "\"}";
-
-      kafkaTemplate.send("products" + RETRY, message.key(), productJson);
+      throw new RuntimeException("Failed to consume message : " + message.key() + " from topic : " + message.topic());
     }
+  }
+
+  private void doSomething(ConsumerRecord<String, String> message) {
+    throw new RuntimeException("Failed to consume message : " + message.key() + " from topic : " + message.topic());
+  }
+
+  @DltHandler
+  public void dlt(String message, @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
+    log.info("Received message : [{}] from topic : [{}] at : [{}]", message, topic, now());
   }
 
 }
