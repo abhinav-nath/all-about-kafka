@@ -26,8 +26,8 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
   @Test
   void testNonBlockingRetriesAndDlt() throws InterruptedException {
     kafkaTemplate.send("products", "product1", "This is Product 1");
-    kafkaTemplate.send("products", "product2", "This is Product 2");
-    kafkaTemplate.send("products", "product1", "This is new Product 1");
+//    kafkaTemplate.send("products", "product2", "This is Product 2");
+//    kafkaTemplate.send("products", "product1", "This is new Product 1");
 
     Thread.sleep(20000);
 

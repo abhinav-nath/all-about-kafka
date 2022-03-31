@@ -21,6 +21,7 @@ repositories {
 dependencies {
   implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
   implementation "org.springframework.kafka:spring-kafka:${springKafkaVersion}"
+  implementation "org.springframework:spring-aspects:${springAspectsVersion}"
   implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
   implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4jVersion}"
   compileOnly "org.projectlombok:lombok:${lombokVersion}"

@@ -20,7 +20,7 @@ public class EmbeddedKafkaBrokerConfig {
       1,
       "products",
       "products-retry",
-      "products-retry.DLT")
+      "products-dlt")
       .kafkaPorts(embeddedKafkaBrokerPort)
       .brokerProperty(KafkaConfig.AutoCreateTopicsEnableProp(), "false");
   }
