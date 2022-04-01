@@ -28,12 +28,35 @@ public class ProductsConsumer {
       message.offset(),
       now());
 
-    doSomething(message);
+    if ("products".equals(message.topic())) {
+      try {
+        doSomething(message);
+      } catch (Exception ex) {
+        retry(message);
+      }
+    } else {
+      doSomething(message);
+    }
+  }
+
+  private void retry(ConsumerRecord<String, String> message) {
+    int retryCounter = 1;
+
+    while (retryCounter <= 3) {
+      try {
+        doSomething(message);
+        return;
+      } catch (Exception ex) {
+        retryCounter++;
+        if (retryCounter >= 3)
+          throw new RuntimeException("retry :: Failed to process message : " + message.key() + " from topic : " + message.topic());
+      }
+    }
   }
 
   private void doSomething(ConsumerRecord<String, String> message) {
     log.info("==> Entered inside doSomething method");
-    //if (!"This is new Product 1".equals(message.value()))
+    //if (!"This is Product 1".equals(message.value()))
     throw new RuntimeException("doSomething :: Failed to process message : " + message.key() + " from topic : " + message.topic());
   }
 
