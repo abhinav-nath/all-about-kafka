@@ -1,19 +1,20 @@
 package com.codecafe.kafka;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("kafka")
 @SpringBootTest
-class TestTest {
+class RetryableDemoTest {
 
   @Autowired
-  private Test test;
+  private RetryableDemo retryableDemo;
 
-  @org.junit.jupiter.api.Test
-  public void testSum() {
-    System.out.println(test.sum(4, 4));
+  @Test
+  void testSum() {
+    System.out.println(retryableDemo.sum(4, 4));
   }
 
 }

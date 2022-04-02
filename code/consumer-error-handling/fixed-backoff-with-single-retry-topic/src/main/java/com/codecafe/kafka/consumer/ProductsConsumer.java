@@ -1,5 +1,6 @@
 package com.codecafe.kafka.consumer;
 
+import com.codecafe.kafka.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.DltHandler;
@@ -15,6 +16,12 @@ import static java.time.LocalDateTime.now;
 @Component
 public class ProductsConsumer {
 
+  private final ProductService productService;
+
+  public ProductsConsumer(ProductService productService) {
+    this.productService = productService;
+  }
+
   @RetryableTopic(
     attempts = "4",
     backoff = @Backoff(delay = 1000),
@@ -28,36 +35,17 @@ public class ProductsConsumer {
       message.offset(),
       now());
 
-    if ("products".equals(message.topic())) {
-      try {
-        doSomething(message);
-      } catch (Exception ex) {
-        retry(message);
-      }
-    } else {
-      doSomething(message);
-    }
-  }
-
-  private void retry(ConsumerRecord<String, String> message) {
-    int retryCounter = 1;
-
-    while (retryCounter <= 3) {
-      try {
-        doSomething(message);
-        return;
-      } catch (Exception ex) {
-        retryCounter++;
-        if (retryCounter >= 3)
-          throw new RuntimeException("retry :: Failed to process message : " + message.key() + " from topic : " + message.topic());
-      }
-    }
-  }
-
-  private void doSomething(ConsumerRecord<String, String> message) {
-    log.info("==> Entered inside doSomething method");
-    //if (!"This is Product 1".equals(message.value()))
-    throw new RuntimeException("doSomething :: Failed to process message : " + message.key() + " from topic : " + message.topic());
+    /* The method marked as @Retryable cannot be called within the same class.
+       It will not work!
+       Method marked as @Retryable must be present in a Spring bean,
+       and it must be invoked from another Spring bean.
+       Then only it will work.
+       https://stackoverflow.com/a/38755319/10371864
+     */
+    if ("products".equals(message.topic()))
+      productService.handleProductsFromMainTopic(message);
+    else
+      productService.handleProductsFromRetryTopic(message);
   }
 
   @DltHandler

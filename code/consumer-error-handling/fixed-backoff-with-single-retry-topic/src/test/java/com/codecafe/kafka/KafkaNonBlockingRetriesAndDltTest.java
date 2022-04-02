@@ -11,6 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.StreamSupport;
 
 import static java.util.stream.Collectors.toList;
@@ -24,8 +25,8 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
   private KafkaTemplate<String, String> kafkaTemplate;
 
   @Test
-  void testNonBlockingRetriesAndDlt() throws InterruptedException {
-    kafkaTemplate.send("products", "product1", "This is Product 1");
+  void testNonBlockingRetriesAndDlt() throws InterruptedException, ExecutionException {
+    kafkaTemplate.send("products", "product1", "This is Product 1").get();
 //    kafkaTemplate.send("products", "product2", "This is Product 2");
 //    kafkaTemplate.send("products", "product1", "This is new Product 1");
 
