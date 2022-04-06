@@ -12,15 +12,16 @@ public class ProductService {
   // Perform local retries before pushing the message to the retry topic
   @Retryable(maxAttempts = 5)
   public void handleProductsFromMainTopic(ConsumerRecord<String, String> message) {
+    log.info("==> Entered inside handleProductsFromMainTopic method");
     handleProducts(message);
   }
 
   public void handleProductsFromRetryTopic(ConsumerRecord<String, String> message) {
+    log.info("==> Entered inside handleProductsFromRetryTopic method");
     handleProducts(message);
   }
 
   private void handleProducts(ConsumerRecord<String, String> message) {
-    log.info("==> Entered inside handleProducts method");
     //if (!"This is Product 1".equals(message.value()))
     throw new RuntimeException("handleProducts :: Failed to process message : " + message.key() + " from topic : " + message.topic());
   }
