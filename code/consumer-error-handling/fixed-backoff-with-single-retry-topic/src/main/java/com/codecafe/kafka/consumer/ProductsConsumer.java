@@ -50,7 +50,7 @@ public class ProductsConsumer {
 
   @DltHandler
   public void dlt(ConsumerRecord<String, String> message) {
-    log.info("Received message with key : [{}], value : [{}], topic : [{}], offset : [{}], at : [{}]",
+    log.info("DLT Received message with key : [{}], value : [{}], topic : [{}], offset : [{}], at : [{}]",
       message.key(),
       message.value(),
       message.topic(),
