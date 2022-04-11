@@ -3,9 +3,7 @@ package com.codecafe.kafka.consumer;
 import com.codecafe.kafka.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.DltHandler;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.RetryableTopic;
+import org.springframework.kafka.annotation.*;
 import org.springframework.kafka.retrytopic.FixedDelayStrategy;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
@@ -25,8 +23,11 @@ public class ProductsConsumer {
   @RetryableTopic(
     attempts = "4",
     backoff = @Backoff(delay = 1000),
-    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC)
-  @KafkaListener(topics = "products")
+    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC,
+    retryTopicSuffix = "-test-retry",
+    dltTopicSuffix = "-test-dlt"
+  )
+  @KafkaListener(topics = {"products"})
   public void listen(ConsumerRecord<String, String> message) {
     log.info("Received message with key : [{}], value : [{}], topic : [{}], offset : [{}], at : [{}]",
       message.key(),
