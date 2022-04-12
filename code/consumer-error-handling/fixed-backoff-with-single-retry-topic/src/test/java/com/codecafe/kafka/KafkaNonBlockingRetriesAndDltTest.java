@@ -40,7 +40,7 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
 
       assertThat(topics)
         .containsOnly(
-          "products", "products-test-retry", "products-test-dlt");
+          "products", "my-prefix-products-retry", "my-prefix-products-dlt");
     }
   }
 

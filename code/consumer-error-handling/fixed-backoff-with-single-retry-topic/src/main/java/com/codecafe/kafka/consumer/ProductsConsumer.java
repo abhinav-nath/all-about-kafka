@@ -23,9 +23,7 @@ public class ProductsConsumer {
   @RetryableTopic(
     attempts = "4",
     backoff = @Backoff(delay = 1000),
-    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC,
-    retryTopicSuffix = "-test-retry",
-    dltTopicSuffix = "-test-dlt"
+    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC
   )
   @KafkaListener(topics = {"products"})
   public void listen(ConsumerRecord<String, String> message) {

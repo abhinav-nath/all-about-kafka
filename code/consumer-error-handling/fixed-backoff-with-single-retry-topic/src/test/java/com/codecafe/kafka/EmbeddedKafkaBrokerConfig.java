@@ -19,8 +19,8 @@ public class EmbeddedKafkaBrokerConfig {
       false,
       1,
       "products",
-      "products-test-retry",
-      "products-test-dlt")
+      "my-prefix-products-retry",
+      "my-prefix-products-dlt")
       .kafkaPorts(embeddedKafkaBrokerPort)
       .brokerProperty(KafkaConfig.AutoCreateTopicsEnableProp(), "false");
   }
