@@ -1,0 +1,11 @@
+{
+  "name": "BookKey",
+  "type": "record",
+  "namespace": "com.codecafe.avro",
+  "fields": [
+    {
+      "name": "isbn",
+      "type": "string"
+    }
+  ]
+}
