@@ -1,0 +1,27 @@
+{
+  "name": "BookValue",
+  "type": "record",
+  "namespace": "com.codecafe.avro",
+  "fields": [
+    {
+      "name": "isbn",
+      "type": "string"
+    },
+    {
+      "name": "title",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "author",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    }
+  ]
+}

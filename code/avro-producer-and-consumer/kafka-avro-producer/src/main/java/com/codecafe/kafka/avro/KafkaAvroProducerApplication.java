@@ -1,4 +1,4 @@
-package com.codecafe.kafka.avro.producer;
+package com.codecafe.kafka.avro;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
