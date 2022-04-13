@@ -66,3 +66,15 @@ services:
       JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
     depends_on:
       - kafka
+
+  db:
+    image: "postgres:13.4"
+    container_name: books-db
+    restart: always
+    environment:
+      POSTGRES_USER: booksDbUser
+      POSTGRES_PASSWORD: booksDbPassword
+      POSTGRES_DB: booksDb
+    ports:
+      - 5432:5432
+    command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]

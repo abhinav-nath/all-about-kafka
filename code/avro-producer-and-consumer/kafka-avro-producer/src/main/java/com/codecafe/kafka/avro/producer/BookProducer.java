@@ -29,7 +29,7 @@ public class BookProducer {
     future.addCallback(new ListenableFutureCallback<>() {
       @Override
       public void onFailure(Throwable ex) {
-        log.error("Failed to send message");
+        log.error("Failed to send message", ex);
       }
 
       @Override

@@ -1,0 +1,38 @@
+server:
+  port: 8099
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/booksDb"
+    username: "booksDbUser"
+    password: "booksDbPassword"
+  flyway:
+    user: "${spring.datasource.username}"
+    password: "${spring.datasource.password}"
+    url: "${spring.datasource.url}"
+    baselineOnMigrate: true
+  kafka:
+    bootstrap-servers: localhost:29092
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
+    consumer:
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      group-id: book-consumer
+      properties:
+        session.timeout.ms: 45000
+        spring.deserializer.key.delegate.class: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        spring.deserializer.value.delegate.class: io.confluent.kafka.serializers.KafkaAvroDeserializer
+        specific:
+          avro:
+            reader: true
+    producer:
+      key-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
