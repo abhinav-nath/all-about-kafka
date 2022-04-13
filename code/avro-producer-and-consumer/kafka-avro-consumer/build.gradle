@@ -1,0 +1,37 @@
+plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'io.spring.dependency-management' version "${springDependencyManagementPluginVersion}"
+	id "com.github.davidmc24.gradle.plugin.avro" version "${avroPluginVersion}"
+	id 'java'
+}
+
+group = 'com.codecafe.kafka.avro'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter:${springBootVersion}"
+	implementation "org.springframework.kafka:spring-kafka:${springKafkaVersion}"
+	implementation "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+	implementation "org.apache.logging.log4j:log4j-to-slf4j:${log4jVersion}"
+	implementation "org.apache.avro:avro:${avroVersion}"
+	implementation "io.confluent:kafka-avro-serializer:${kafkaAvroSerializerVersion}"
+	compileOnly "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+	testImplementation "org.springframework.kafka:spring-kafka-test:${springKafkaVersion}"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
