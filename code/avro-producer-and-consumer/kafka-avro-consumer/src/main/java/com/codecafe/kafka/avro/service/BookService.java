@@ -2,7 +2,7 @@ package com.codecafe.kafka.avro.service;
 
 import com.codecafe.avro.BookKey;
 import com.codecafe.avro.BookValue;
-import com.codecafe.kafka.avro.consumer.BookRepository;
+import com.codecafe.kafka.avro.repository.BookRepository;
 import com.codecafe.kafka.avro.entity.BookEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

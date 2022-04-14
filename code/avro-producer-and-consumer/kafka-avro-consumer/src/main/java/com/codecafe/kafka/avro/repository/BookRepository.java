@@ -1,4 +1,4 @@
-package com.codecafe.kafka.avro.consumer;
+package com.codecafe.kafka.avro.repository;
 
 import com.codecafe.kafka.avro.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
