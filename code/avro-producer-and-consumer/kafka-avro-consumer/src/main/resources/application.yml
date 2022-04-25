@@ -8,7 +8,7 @@ spring:
     hibernate:
       ddl-auto: validate
   datasource:
-    url: "jdbc:postgresql://localhost:5432/booksDb"
+    url: "jdbc:postgresql://localhost:5442/booksDb"
     username: "booksDbUser"
     password: "booksDbPassword"
   flyway:

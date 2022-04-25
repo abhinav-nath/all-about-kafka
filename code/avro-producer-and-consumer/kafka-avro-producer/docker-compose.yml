@@ -76,5 +76,5 @@ services:
       POSTGRES_PASSWORD: booksDbPassword
       POSTGRES_DB: booksDb
     ports:
-      - 5432:5432
+      - 5442:5432
     command: [ "postgres", "-c", "log_statement=all", "-c", "log_destination=stderr" ]

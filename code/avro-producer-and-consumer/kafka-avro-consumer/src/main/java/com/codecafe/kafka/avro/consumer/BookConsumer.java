@@ -26,7 +26,7 @@ public class BookConsumer {
 
   @RetryableTopic(
     attempts = "4",
-    backoff = @Backoff(delay = 1000),
+    backoff = @Backoff(delay = 3000),
     fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC
   )
   @KafkaListener(topics = {"books"})
