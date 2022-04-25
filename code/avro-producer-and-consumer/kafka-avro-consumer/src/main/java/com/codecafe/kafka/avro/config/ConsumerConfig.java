@@ -15,6 +15,8 @@ import static java.util.Collections.emptyMap;
 @Configuration
 public class ConsumerConfig {
 
+  // Make global fatal exceptions like DeserializationException, ClassCastException retryable
+  // By default these exceptions are not retried and directly sent to the DLT
   @Bean(name = RetryTopicInternalBeanNames.DESTINATION_TOPIC_CONTAINER_NAME)
   public DestinationTopicResolver destinationTopicResolver(ApplicationContext context) {
     DefaultDestinationTopicResolver resolver = new DefaultDestinationTopicResolver(systemUTC(), context);
