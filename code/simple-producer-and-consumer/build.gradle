@@ -11,8 +11,6 @@ repositories {
 
 dependencies {
     implementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
 
 test {
