@@ -1,26 +1,23 @@
-- Kafka Cluster -
+## Kafka Cluster
 
 At the heart of Kafka, there is a Kafka cluster.
 
 Kafka cluster generally consists of multiple Brokers.
 
 
-
-- Zookeeper -
+## Zookeeper
 
 In order to manage multiple Brokers, we need a Zookeeper.
 
 Zookeeper keeps track of the health of the brokers and manage the cluster for you.
 
 
-
-- Broker -
+## Broker
 
 Broker is what all the Kafka clients will interact with.
 
 
-
-- Client APIs -
+## Client APIs
 
 1. Kafka Producer
 
@@ -31,8 +28,7 @@ Broker is what all the Kafka clients will interact with.
    Consumer consumes the messages from Kafka topic.
 
 
-
-- Topics -
+## Topics
 
 Topics live inside the Kafka Brokers.
 
@@ -41,8 +37,7 @@ Producers send messages to Kafka Topics.
 Consumers read messages from Kafka Topics.
 
 
-
-- Partitions -
+## Partitions
 
 Partition is where the message lives inside the topic.
 
@@ -63,8 +58,7 @@ All the records are persisted in a physical log file (commit log)
 in the file system where Kafka is installed.
 
 
-
-- Kafka Message -
+## Kafka Message
 
 Kafka message sent from producer has two properties:
 
@@ -78,4 +72,4 @@ If we want our messages to be ordered then we need to send all the messages with
 
 This way all the messages will go to the same partition and hence ordering will be maintained.
 
-Remember - " Ordering is only guaranteed only at the partition level. "
+Remember - "Ordering is only guaranteed only at the partition level."
