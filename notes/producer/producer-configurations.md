@@ -1,8 +1,6 @@
 https://docs.confluent.io/platform/current/installation/configuration/producer-configs.html
 
-------
- acks
-------
+## acks
 
 The number of acknowledgments the producer requires the leader to have received before considering a request complete.
 
@@ -20,9 +18,7 @@ all ->  send() call is considered successful when the message is written to the 
 0   ->  no guarantee (not recommended). The producer will not wait for any acknowledgment from the server at all.
 
 
----------
- retries
----------
+## retries
 
 Number of retries in case of any failure while producing messages to Kafka
 
@@ -31,9 +27,7 @@ integer value [ 0 - 2147483647 ]
 In Spring Kafka, the default value is the max value i.e. 2147483647
 
 
-------------------
- retry.backoff.ms
-------------------
+## retry.backoff.ms
 
 The amount of time to wait before attempting to retry a failed request to a given topic partition.
 This avoids repeatedly sending requests in a tight loop under some failure scenarios.
