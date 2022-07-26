@@ -10,8 +10,3 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         allow.auto.create.topics: false
-
-app:
-  kafka:
-    topic:
-      name: test-topic
