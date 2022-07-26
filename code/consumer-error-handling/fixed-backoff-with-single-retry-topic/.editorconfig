@@ -7,12 +7,12 @@ indent_size = 2
 indent_style = space
 insert_final_newline = false
 trim_trailing_whitespace = true
-max_line_length = 120
+max_line_length = 200
 tab_width = 4
 
 [*.java]
 # don't use wildcard for Java imports
-wildcard_import_limit=999
+wildcard_import_limit = 999
 ij_visual_guides = 120
 ij_wrap_on_typing = true
 ij_java_binary_operation_sign_on_next_line = true
@@ -22,6 +22,8 @@ ij_java_align_multiline_array_initializer_expression = true
 ij_java_use_single_class_imports = true
 ij_java_class_count_to_use_import_on_demand = 999
 ij_java_names_count_to_use_import_on_demand = 999
+ij_java_imports_layout = *, |, java.**, |, javax.**, |, io.**, |, org.**, |, lombok.**, |, com.**, |, $*
+ij_java_layout_static_imports_separately = true
 
 [*.xml]
 indent_size = 4

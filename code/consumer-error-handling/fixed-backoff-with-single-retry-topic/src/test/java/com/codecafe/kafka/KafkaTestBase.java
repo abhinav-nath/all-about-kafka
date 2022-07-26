@@ -1,5 +1,7 @@
 package com.codecafe.kafka;
 
+import java.util.Map;
+
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -9,8 +11,6 @@ import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-
-import java.util.Map;
 
 @ActiveProfiles("kafka")
 @TestPropertySource(properties = "spring.kafka.bootstrap-servers=localhost:${kafka.embedded.port}")

@@ -1,23 +1,27 @@
 package com.codecafe.kafka.consumer;
 
-import com.codecafe.kafka.service.ProductService;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.*;
+import org.springframework.kafka.annotation.DltHandler;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.RetryableTopic;
 import org.springframework.kafka.retrytopic.FixedDelayStrategy;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+import com.codecafe.kafka.service.MessageService;
 
 import static java.time.LocalDateTime.now;
 
 @Slf4j
 @Component
-public class ProductsConsumer {
+public class MessageConsumer {
 
-  private final ProductService productService;
+  private final MessageService messageService;
 
-  public ProductsConsumer(ProductService productService) {
-    this.productService = productService;
+  public MessageConsumer(MessageService messageService) {
+    this.messageService = messageService;
   }
 
   @RetryableTopic(
@@ -25,7 +29,7 @@ public class ProductsConsumer {
     backoff = @Backoff(delay = 1000),
     fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC
   )
-  @KafkaListener(topics = {"products"})
+  @KafkaListener(topics = {"test-topic"})
   public void listen(ConsumerRecord<String, String> message) {
     log.info("Received message with key : [{}], value : [{}], topic : [{}], offset : [{}], at : [{}]",
       message.key(),
@@ -41,10 +45,10 @@ public class ProductsConsumer {
        Then only it will work.
        https://stackoverflow.com/a/38755319/10371864
      */
-    if ("products".equals(message.topic()))
-      productService.handleProductsFromMainTopic(message);
+    if ("test-topic".equals(message.topic()))
+      messageService.handleMessageFromMainTopic(message);
     else
-      productService.handleProductsFromRetryTopic(message);
+      messageService.handleMessageFromRetryTopic(message);
   }
 
   @DltHandler

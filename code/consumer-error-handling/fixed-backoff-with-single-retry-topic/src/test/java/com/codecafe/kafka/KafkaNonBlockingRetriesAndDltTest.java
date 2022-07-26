@@ -1,6 +1,9 @@
 package com.codecafe.kafka;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.StreamSupport;
+
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -10,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.StreamSupport;
+import lombok.extern.slf4j.Slf4j;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,9 +27,9 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
 
   @Test
   void testNonBlockingRetriesAndDlt() throws InterruptedException, ExecutionException {
-    kafkaTemplate.send("products", "product1", "This is Product 1").get();
-//    kafkaTemplate.send("products", "product2", "This is Product 2");
-//    kafkaTemplate.send("products", "product1", "This is new Product 1");
+    kafkaTemplate.send("test-topic", "1", "This is Message 1").get();
+//    kafkaTemplate.send("test-topic", "2", "This is Message 2");
+//    kafkaTemplate.send("test-topic", "3", "This is new Message 1");
 
     Thread.sleep(20000);
 
@@ -40,7 +41,7 @@ class KafkaNonBlockingRetriesAndDltTest extends KafkaTestBase {
 
       assertThat(topics)
         .containsOnly(
-          "products", "my-prefix-products-retry", "my-prefix-products-dlt");
+          "test-topic", "my-prefix-test-topic-retry", "my-prefix-test-topic-dlt");
     }
   }
 

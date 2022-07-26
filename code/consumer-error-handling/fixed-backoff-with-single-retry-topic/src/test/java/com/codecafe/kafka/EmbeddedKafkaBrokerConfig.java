@@ -1,6 +1,7 @@
 package com.codecafe.kafka;
 
 import kafka.server.KafkaConfig;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -18,9 +19,9 @@ public class EmbeddedKafkaBrokerConfig {
       1,
       false,
       1,
-      "products",
-      "my-prefix-products-retry",
-      "my-prefix-products-dlt")
+      "test-topic",
+      "my-prefix-test-topic-retry",
+      "my-prefix-test-topic-dlt")
       .kafkaPorts(embeddedKafkaBrokerPort)
       .brokerProperty(KafkaConfig.AutoCreateTopicsEnableProp(), "false");
   }
