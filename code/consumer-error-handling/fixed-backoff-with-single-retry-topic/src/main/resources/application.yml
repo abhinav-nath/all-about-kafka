@@ -6,7 +6,12 @@ spring:
     bootstrap-servers: localhost:29092
     consumer:
       group-id: test-consumer
+      auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       properties:
         allow.auto.create.topics: false
+
+logging:
+  level:
+    org.apache.kafka.clients.NetworkClient: ERROR

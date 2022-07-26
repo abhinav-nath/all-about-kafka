@@ -27,7 +27,8 @@ public class MessageConsumer {
   @RetryableTopic(
     attempts = "4",
     backoff = @Backoff(delay = 1000),
-    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC
+    fixedDelayTopicStrategy = FixedDelayStrategy.SINGLE_TOPIC,
+    autoCreateTopics = "false"
   )
   @KafkaListener(topics = {"test-topic"})
   public void listen(ConsumerRecord<String, String> message) {
