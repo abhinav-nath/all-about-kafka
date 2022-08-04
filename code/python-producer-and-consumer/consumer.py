@@ -3,7 +3,14 @@ import sys
 
 bootstrap_servers = ['localhost:29092']
 topic_name = 'my_test_topic'
-consumer = KafkaConsumer(topic_name, group_id='group1', bootstrap_servers=bootstrap_servers, auto_offset_reset='earliest')
+
+consumer = KafkaConsumer(
+                         topic_name,
+                         bootstrap_servers = bootstrap_servers,
+                         auto_offset_reset = 'earliest',
+                         enable_auto_commit = True,
+                         group_id = 'my-group-1'
+                        )
 
 try:
     for message in consumer:
