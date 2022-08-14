@@ -33,8 +33,8 @@ public class Consumer {
     props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
 
     // if we want to adjust defaults
-    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"); // default is latest
-    // props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false) // default 5000 - change how often to commit offsets
+    props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");    // default is latest
+    // props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false)      // default 5000 - change how often to commit offsets
     // props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 10000) // default 5000 - change how often to commit offsets
     props.put(ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, "false");
   }
