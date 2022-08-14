@@ -13,13 +13,13 @@ public class RunApp {
 //    final String consumerGroup2 = "ConsumerGroup2";
 
     Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-    Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup1, topics);
-//    Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, consumerGroup2, topics);
+    Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+//    Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup2, topics);
 
     (new Thread(producer::produceMessages)).start();
 
-    (new Thread(consumer1::consumeMessages)).start();
-//    (new Thread(consumer2::consumeMessages)).start();
+    (new Thread(consumerA::consumeMessages)).start();
+//    (new Thread(consumerB::consumeMessages)).start();
   }
 
 }
