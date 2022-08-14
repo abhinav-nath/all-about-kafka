@@ -176,7 +176,7 @@ ConsumerB - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 > ConsumerB gets all the messages from Partition 1.
 
 ## Case 5 : One Partition and Two Consumers in Different Consumer Groups
-Create a new topic - **TestTopic5** with ** partition**:
+Create a new topic - **TestTopic5** with **1 partition**:
 
 ![](./images/create-topic-in-kafdrop_4.png "Create a topic with two partitions")
 
