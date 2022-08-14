@@ -9,12 +9,12 @@ public class RunApp {
 
   public static void main(String[] args) {
     final String topics = "TestTopic1";
-    final String consumerGroup = "ConsumerGroup";
-//    final String diffConsumerGroup = "DiffConsumerGroup";
+    final String consumerGroup1 = "ConsumerGroup1";
+//    final String consumerGroup2 = "ConsumerGroup2";
 
     Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-    Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
-//    Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, diffConsumerGroup, topics);
+    Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+//    Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, consumerGroup2, topics);
 
     (new Thread(producer::produceMessages)).start();
 
