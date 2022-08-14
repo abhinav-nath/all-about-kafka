@@ -1,18 +1,24 @@
 plugins {
-    id 'java'
+  id 'java'
 }
 
 group 'com.codecafe.kafka'
 version '1.0.0'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(jdkVersion)
+  }
 }
 
 dependencies {
-    implementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
+  implementation "org.apache.kafka:kafka-clients:${kafkaVersion}"
 }
 
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
