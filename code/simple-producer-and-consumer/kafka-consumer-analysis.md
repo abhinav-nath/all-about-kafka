@@ -25,31 +25,31 @@ Create a new topic named **TestTopic1** with **1 partition** from **Kafdrop** UI
 
 ```java
 String topics = "TestTopic1";
-String consumerGroup = "ConsumerGroup";
+String consumerGroup1 = "ConsumerGroup1";
 
 Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
+Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
 
 (new Thread(producer::produceMessages)).start();
-(new Thread(consumer1::consumeMessages)).start();
+(new Thread(consumerA::consumeMessages)).start();
 ```
 
 Output:
 
 ```
-Consumer1 - key: [apple] value: [this is message #0] partition: [0] offset: [0]
-Consumer1 - key: [apple] value: [this is message #1] partition: [0] offset: [1]
-Consumer1 - key: [apple] value: [this is message #2] partition: [0] offset: [2]
-Consumer1 - key: [apple] value: [this is message #3] partition: [0] offset: [3]
-Consumer1 - key: [apple] value: [this is message #4] partition: [0] offset: [4]
-Consumer1 - key: [apple] value: [this is message #5] partition: [0] offset: [5]
-Consumer1 - key: [apple] value: [this is message #6] partition: [0] offset: [6]
-Consumer1 - key: [apple] value: [this is message #7] partition: [0] offset: [7]
-Consumer1 - key: [apple] value: [this is message #8] partition: [0] offset: [8]
-Consumer1 - key: [apple] value: [this is message #9] partition: [0] offset: [9]
+ConsumerA - key: [apple] value: [this is message #0] partition: [0] offset: [0]
+ConsumerA - key: [apple] value: [this is message #1] partition: [0] offset: [1]
+ConsumerA - key: [apple] value: [this is message #2] partition: [0] offset: [2]
+ConsumerA - key: [apple] value: [this is message #3] partition: [0] offset: [3]
+ConsumerA - key: [apple] value: [this is message #4] partition: [0] offset: [4]
+ConsumerA - key: [apple] value: [this is message #5] partition: [0] offset: [5]
+ConsumerA - key: [apple] value: [this is message #6] partition: [0] offset: [6]
+ConsumerA - key: [apple] value: [this is message #7] partition: [0] offset: [7]
+ConsumerA - key: [apple] value: [this is message #8] partition: [0] offset: [8]
+ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
-> **Observation**: As there is only one partition, it is assigned to the single consumer and thus Consumer1 receives all the messages.
+> **Observation**: As there is only one partition, it is assigned to the single consumer and thus ConsumerA receives all the messages.
 
 ## Case 2 : Two Partitions and One Consumer in One Consumer Group
 Create a new topic - **TestTopic2** with **2 partitions**:
@@ -58,36 +58,36 @@ Create a new topic - **TestTopic2** with **2 partitions**:
 
 ```java
 String topics = "TestTopic2";
-String consumerGroup = "ConsumerGroup";
+String consumerGroup1 = "ConsumerGroup1";
 
 Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
-Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, consumerGroup, topics);
+Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup1, topics);
 
 (new Thread(producer::produceMessages)).start();
 
-(new Thread(consumer1::consumeMessages)).start();
-(new Thread(consumer2::consumeMessages)).start();
+(new Thread(consumerA::consumeMessages)).start();
+(new Thread(consumerB::consumeMessages)).start();
 ```
 
 Output:
 
 ```
-Consumer1 - key: [apple] value: [this is message #0] partition: [1] offset: [0]
-Consumer1 - key: [apple] value: [this is message #1] partition: [1] offset: [1]
-Consumer1 - key: [apple] value: [this is message #2] partition: [1] offset: [2]
-Consumer1 - key: [apple] value: [this is message #3] partition: [1] offset: [3]
-Consumer1 - key: [apple] value: [this is message #4] partition: [1] offset: [4]
-Consumer1 - key: [apple] value: [this is message #5] partition: [1] offset: [5]
-Consumer1 - key: [apple] value: [this is message #6] partition: [1] offset: [6]
-Consumer1 - key: [apple] value: [this is message #7] partition: [1] offset: [7]
-Consumer1 - key: [apple] value: [this is message #8] partition: [1] offset: [8]
-Consumer1 - key: [apple] value: [this is message #9] partition: [1] offset: [9]
+ConsumerA - key: [apple] value: [this is message #0] partition: [1] offset: [0]
+ConsumerA - key: [apple] value: [this is message #1] partition: [1] offset: [1]
+ConsumerA - key: [apple] value: [this is message #2] partition: [1] offset: [2]
+ConsumerA - key: [apple] value: [this is message #3] partition: [1] offset: [3]
+ConsumerA - key: [apple] value: [this is message #4] partition: [1] offset: [4]
+ConsumerA - key: [apple] value: [this is message #5] partition: [1] offset: [5]
+ConsumerA - key: [apple] value: [this is message #6] partition: [1] offset: [6]
+ConsumerA - key: [apple] value: [this is message #7] partition: [1] offset: [7]
+ConsumerA - key: [apple] value: [this is message #8] partition: [1] offset: [8]
+ConsumerA - key: [apple] value: [this is message #9] partition: [1] offset: [9]
 ```
 
 > **Observation**: There are 2 partitions and one consumer.
 > All the messages have the same partitioning key as `apple` so all the messages go to only one of the two partitions (in this case to partition 1).
-> And since there is only one consumer, the partition is assigned to Consumer1 and hence Consumer1 receives all the messages.
+> And since there is only one consumer, the partition is assigned to ConsumerA and hence ConsumerA receives all the messages.
 
 ## Case 3 : One Partition and Two Consumers in One Consumer Group
 Create a new topic - **TestTopic3** with **1 partition**:
@@ -96,36 +96,36 @@ Create a new topic - **TestTopic3** with **1 partition**:
 
 ```java
 String topics = "TestTopic3";
-String consumerGroup = "ConsumerGroup";
+String consumerGroup1 = "ConsumerGroup1";
 
 Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
-Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, consumerGroup, topics);
+Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup1, topics);
 
 (new Thread(producer::produceMessages)).start();
 
-(new Thread(consumer1::consumeMessages)).start();
-(new Thread(consumer2::consumeMessages)).start();
+(new Thread(consumerA::consumeMessages)).start();
+(new Thread(consumerB::consumeMessages)).start();
 ```
 
 Output:
 
 ```
-Consumer1 - key: [apple] value: [this is message #0] partition: [1] offset: [0]
-Consumer1 - key: [apple] value: [this is message #1] partition: [1] offset: [1]
-Consumer1 - key: [apple] value: [this is message #2] partition: [1] offset: [2]
-Consumer1 - key: [apple] value: [this is message #3] partition: [1] offset: [3]
-Consumer1 - key: [apple] value: [this is message #4] partition: [1] offset: [4]
-Consumer1 - key: [apple] value: [this is message #5] partition: [1] offset: [5]
-Consumer1 - key: [apple] value: [this is message #6] partition: [1] offset: [6]
-Consumer1 - key: [apple] value: [this is message #7] partition: [1] offset: [7]
-Consumer1 - key: [apple] value: [this is message #8] partition: [1] offset: [8]
-Consumer1 - key: [apple] value: [this is message #9] partition: [1] offset: [9]
+ConsumerA - key: [apple] value: [this is message #0] partition: [1] offset: [0]
+ConsumerA - key: [apple] value: [this is message #1] partition: [1] offset: [1]
+ConsumerA - key: [apple] value: [this is message #2] partition: [1] offset: [2]
+ConsumerA - key: [apple] value: [this is message #3] partition: [1] offset: [3]
+ConsumerA - key: [apple] value: [this is message #4] partition: [1] offset: [4]
+ConsumerA - key: [apple] value: [this is message #5] partition: [1] offset: [5]
+ConsumerA - key: [apple] value: [this is message #6] partition: [1] offset: [6]
+ConsumerA - key: [apple] value: [this is message #7] partition: [1] offset: [7]
+ConsumerA - key: [apple] value: [this is message #8] partition: [1] offset: [8]
+ConsumerA - key: [apple] value: [this is message #9] partition: [1] offset: [9]
 ```
 
 > **Observation**: There is 1 partition and two consumers.
 > All the messages have the same key as `apple` so all the messages go to only one of the two partitions (in this case to partition 1).
-> The partition is assigned to one of Consumer1 and Consumer2. In this case Consumer1 receives all the messages.
+> The partition is assigned to one of ConsumerA and ConsumerB. In this case ConsumerA receives all the messages.
 
 ## Case 4 : Two Partitions and Two Consumers in One Consumer Group
 Create a new topic - **TestTopic4** with **2 partitions**:
@@ -144,89 +144,89 @@ Consumer:
 
 ```java
 String topics = "TestTopic4";
-String consumerGroup = "ConsumerGroup";
+String consumerGroup1 = "ConsumerGroup1";
 
 Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
-Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, consumerGroup, topics);
+Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup1, topics);
 
 (new Thread(producer::produceMessages)).start();
 
-(new Thread(consumer1::consumeMessages)).start();
-(new Thread(consumer2::consumeMessages)).start();
+(new Thread(consumerA::consumeMessages)).start();
+(new Thread(consumerB::consumeMessages)).start();
 ```
 
 Output:
 
 ```
-Consumer2 - key: [apple1] value: [this is message #1] partition: [1] offset: [0]
-Consumer2 - key: [apple2] value: [this is message #2] partition: [1] offset: [1]
-Consumer1 - key: [apple0] value: [this is message #0] partition: [0] offset: [0]
-Consumer1 - key: [apple4] value: [this is message #4] partition: [0] offset: [1]
-Consumer1 - key: [apple7] value: [this is message #7] partition: [0] offset: [2]
-Consumer1 - key: [apple9] value: [this is message #9] partition: [0] offset: [3]
-Consumer2 - key: [apple3] value: [this is message #3] partition: [1] offset: [2]
-Consumer2 - key: [apple5] value: [this is message #5] partition: [1] offset: [3]
-Consumer2 - key: [apple6] value: [this is message #6] partition: [1] offset: [4]
-Consumer2 - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
+ConsumerB - key: [apple1] value: [this is message #1] partition: [1] offset: [0]
+ConsumerB - key: [apple2] value: [this is message #2] partition: [1] offset: [1]
+ConsumerA - key: [apple0] value: [this is message #0] partition: [0] offset: [0]
+ConsumerA - key: [apple4] value: [this is message #4] partition: [0] offset: [1]
+ConsumerA - key: [apple7] value: [this is message #7] partition: [0] offset: [2]
+ConsumerA - key: [apple9] value: [this is message #9] partition: [0] offset: [3]
+ConsumerB - key: [apple3] value: [this is message #3] partition: [1] offset: [2]
+ConsumerB - key: [apple5] value: [this is message #5] partition: [1] offset: [3]
+ConsumerB - key: [apple6] value: [this is message #6] partition: [1] offset: [4]
+ConsumerB - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 ```
 
 > **Observation**: There are 2 partition and two consumers. Each message has a different key.
 > Each message goes to either of two partitions (0 or 1 based on the partitioning logic).
-> Partition 0 is assigned to Consumer1 and Partition 1 is assigned to Consumer2.
-> So Consumer1 gets all the messages from Partition 0 and
-> Consumer2 gets all the messages from Partition 1.
+> Partition 0 is assigned to ConsumerA and Partition 1 is assigned to ConsumerB.
+> So ConsumerA gets all the messages from Partition 0 and
+> ConsumerB gets all the messages from Partition 1.
 
 ## Case 5 : One Partition and Two Consumers in Different Consumer Groups
 Create a new topic - **TestTopic5** with ** partition**:
 
 ![](./images/create-topic-in-kafdrop_4.png "Create a topic with two partitions")
 
-Let's keep the same key `apple` for all the messages. 
+Let's keep the same key `apple` for all the messages.
 
 Consumer:
 
 ```java
 String topics = "TestTopic5";
-String consumerGroup = "ConsumerGroup";
-String diffConsumerGroup = "DiffConsumerGroup";
+String consumerGroup1 = "ConsumerGroup1";
+String consumerGroup2 = "ConsumerGroup2";
 
 Producer producer = new Producer(BOOTSTRAP_SERVERS, topics);
-Consumer consumer1 = new Consumer("Consumer1", BOOTSTRAP_SERVERS, consumerGroup, topics);
-Consumer consumer2 = new Consumer("Consumer2", BOOTSTRAP_SERVERS, diffConsumerGroup, topics);
+Consumer consumerA = new Consumer("ConsumerA", BOOTSTRAP_SERVERS, consumerGroup1, topics);
+Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup2, topics);
 
 (new Thread(producer::produceMessages)).start();
 
-(new Thread(consumer1::consumeMessages)).start();
-(new Thread(consumer2::consumeMessages)).start();
+(new Thread(consumerA::consumeMessages)).start();
+(new Thread(consumerB::consumeMessages)).start();
 ```
 
 Output:
 
 ```
-Consumer1 - key: [apple] value: [this is message #0] partition: [0] offset: [0]
-Consumer1 - key: [apple] value: [this is message #1] partition: [0] offset: [1]
-Consumer1 - key: [apple] value: [this is message #2] partition: [0] offset: [2]
-Consumer1 - key: [apple] value: [this is message #3] partition: [0] offset: [3]
-Consumer2 - key: [apple] value: [this is message #0] partition: [0] offset: [0]
-Consumer2 - key: [apple] value: [this is message #1] partition: [0] offset: [1]
-Consumer1 - key: [apple] value: [this is message #4] partition: [0] offset: [4]
-Consumer1 - key: [apple] value: [this is message #5] partition: [0] offset: [5]
-Consumer2 - key: [apple] value: [this is message #2] partition: [0] offset: [2]
-Consumer2 - key: [apple] value: [this is message #3] partition: [0] offset: [3]
-Consumer2 - key: [apple] value: [this is message #4] partition: [0] offset: [4]
-Consumer2 - key: [apple] value: [this is message #5] partition: [0] offset: [5]
-Consumer2 - key: [apple] value: [this is message #6] partition: [0] offset: [6]
-Consumer2 - key: [apple] value: [this is message #7] partition: [0] offset: [7]
-Consumer1 - key: [apple] value: [this is message #6] partition: [0] offset: [6]
-Consumer1 - key: [apple] value: [this is message #7] partition: [0] offset: [7]
-Consumer1 - key: [apple] value: [this is message #8] partition: [0] offset: [8]
-Consumer1 - key: [apple] value: [this is message #9] partition: [0] offset: [9]
-Consumer2 - key: [apple] value: [this is message #8] partition: [0] offset: [8]
-Consumer2 - key: [apple] value: [this is message #9] partition: [0] offset: [9]
+ConsumerA - key: [apple] value: [this is message #0] partition: [0] offset: [0]
+ConsumerA - key: [apple] value: [this is message #1] partition: [0] offset: [1]
+ConsumerA - key: [apple] value: [this is message #2] partition: [0] offset: [2]
+ConsumerA - key: [apple] value: [this is message #3] partition: [0] offset: [3]
+ConsumerB - key: [apple] value: [this is message #0] partition: [0] offset: [0]
+ConsumerB - key: [apple] value: [this is message #1] partition: [0] offset: [1]
+ConsumerA - key: [apple] value: [this is message #4] partition: [0] offset: [4]
+ConsumerA - key: [apple] value: [this is message #5] partition: [0] offset: [5]
+ConsumerB - key: [apple] value: [this is message #2] partition: [0] offset: [2]
+ConsumerB - key: [apple] value: [this is message #3] partition: [0] offset: [3]
+ConsumerB - key: [apple] value: [this is message #4] partition: [0] offset: [4]
+ConsumerB - key: [apple] value: [this is message #5] partition: [0] offset: [5]
+ConsumerB - key: [apple] value: [this is message #6] partition: [0] offset: [6]
+ConsumerB - key: [apple] value: [this is message #7] partition: [0] offset: [7]
+ConsumerA - key: [apple] value: [this is message #6] partition: [0] offset: [6]
+ConsumerA - key: [apple] value: [this is message #7] partition: [0] offset: [7]
+ConsumerA - key: [apple] value: [this is message #8] partition: [0] offset: [8]
+ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
+ConsumerB - key: [apple] value: [this is message #8] partition: [0] offset: [8]
+ConsumerB - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
 > **Observation**: There is 1 partition and two consumers in different Consumer Groups.
 > All the messages have the same key.
-> In this case all the 10 messages will be read by both Consumer1 and Consumer2 because they belong to different Consumer Groups.
+> In this case all the 10 messages will be read by both ConsumerA and ConsumerB because they belong to different Consumer Groups.
 > The ordering of the messages is guaranteed in both Consumers because the key is same for each message.
