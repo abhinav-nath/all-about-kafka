@@ -121,8 +121,8 @@ ConsumerA - key: [apple] value: [this is message #8] partition: [0] offset: [8]
 ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
-> **Observation**: There is one partition and two consumers.
-> This partition would be assigned to only one consumer and the other consumer will stay idle.
+> **Observation**: There is one partition and two consumers in the same consumer group.
+> This one partition would be assigned to only one consumer and the other consumer will stay idle.
 > In this case ConsumerA received all the messages and ConsumerB remained idle.
 
 ## Case 4 : Two Partitions, Two Consumers in Same Consumer Group
