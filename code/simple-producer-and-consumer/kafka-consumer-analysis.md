@@ -12,13 +12,13 @@ docker-compose up -d
 
 !["Run docker-compose.yml"](./images/run-docker-compose.png "Run docker-compose.yml")
 
-1. [One Partition and One Consumer in One Consumer Group](#case-1--one-partition-and-one-consumer-in-one-consumer-group)
-2. [Two Partitions and One Consumer in One Consumer Group](#case-2--two-partitions-and-one-consumer-in-one-consumer-group)
-3. [One Partition and Two Consumers in One Consumer Group](#case-3--one-partition-and-two-consumers-in-one-consumer-group)
-4. [Two Partitions and Two Consumers in One Consumer Group](#case-4--two-partitions-and-two-consumers-in-one-consumer-group)
-5. [One Partition and Two Consumers in Different Consumer Groups](#case-5--one-partition-and-two-consumers-in-different-consumer-groups)
+1. [Case 1: One Partition, One Consumer in a Consumer Group](#case-1-one-partition-one-consumer-in-a-consumer-group)
+2. [Case 2: Two Partitions, One Consumer in a Consumer Group](#case-2-two-partitions-one-consumer-in-a-consumer-group)
+3. [Case 3: One Partition, Two Consumers in Same Consumer Group](#case-3-one-partition-two-consumers-in-same-consumer-group)
+4. [Case 4: Two Partitions, Two Consumers in Same Consumer Group](#case-4-two-partitions-two-consumers-in-same-consumer-group)
+5. [Case 5: One Partition, Two Consumers in Different Consumer Groups](#case-5-one-partition-two-consumers-in-different-consumer-groups)
 
-## Case 1 : One Partition, One Consumer in a Consumer Group
+## Case 1: One Partition, One Consumer in a Consumer Group
 Create a new topic named **TestTopic1** with **1 partition** from **Kafdrop** UI:
 
 ![](./images/create-topic-in-kafdrop.png "Create a topic from Kafdrop")
@@ -51,7 +51,7 @@ ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 
 > **Observation**: As there is only one partition, it is assigned to the single consumer and thus ConsumerA receives all the messages.
 
-## Case 2 : Two Partitions, One Consumer in a Consumer Group
+## Case 2: Two Partitions, One Consumer in a Consumer Group
 Create a new topic - **TestTopic2** with **2 partitions**:
 
 ![](./images/create-topic-in-kafdrop_1.png "Create a topic with two partitions")
@@ -87,7 +87,7 @@ ConsumerA - key: [apple] value: [this is message #9] partition: [1] offset: [9]
 > All the messages have the same partitioning key as `apple` so all the messages go to only one of the two partitions (in this case to partition 1).
 > And since there is only one consumer, the partition is assigned to ConsumerA and hence ConsumerA receives all the messages.
 
-## Case 3 : One Partition, Two Consumers in Same Consumer Group
+## Case 3: One Partition, Two Consumers in Same Consumer Group
 Create a new topic - **TestTopic3** with **1 partition**:
 
 ![](./images/create-topic-in-kafdrop_2.png "Create a topic with two partitions")
@@ -125,7 +125,7 @@ ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 > This one partition would be assigned to only one consumer and the other consumer will stay idle.
 > In this case ConsumerA received all the messages and ConsumerB remained idle.
 
-## Case 4 : Two Partitions, Two Consumers in Same Consumer Group
+## Case 4: Two Partitions, Two Consumers in Same Consumer Group
 Create a new topic - **TestTopic4** with **2 partitions**:
 
 ![](./images/create-topic-in-kafdrop_3.png "Create a topic with two partitions")
@@ -175,7 +175,7 @@ ConsumerB - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 > So ConsumerA gets all the messages from Partition 0 and
 > ConsumerB gets all the messages from Partition 1.
 
-## Case 5 : One Partition, Two Consumers in Different Consumer Groups
+## Case 5: One Partition, Two Consumers in Different Consumer Groups
 Create a new topic - **TestTopic5** with **1 partition**:
 
 ![](./images/create-topic-in-kafdrop_4.png "Create a topic with two partitions")
