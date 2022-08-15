@@ -18,7 +18,7 @@ docker-compose up -d
 4. [Two Partitions and Two Consumers in One Consumer Group](#case-4--two-partitions-and-two-consumers-in-one-consumer-group)
 5. [One Partition and Two Consumers in Different Consumer Groups](#case-5--one-partition-and-two-consumers-in-different-consumer-groups)
 
-## Case 1 : One Partition and One Consumer in One Consumer Group
+## Case 1 : One Partition, One Consumer in a Consumer Group
 Create a new topic named **TestTopic1** with **1 partition** from **Kafdrop** UI:
 
 ![](./images/create-topic-in-kafdrop.png "Create a topic from Kafdrop")
@@ -51,7 +51,7 @@ ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 
 > **Observation**: As there is only one partition, it is assigned to the single consumer and thus ConsumerA receives all the messages.
 
-## Case 2 : Two Partitions and One Consumer in One Consumer Group
+## Case 2 : Two Partitions, One Consumer in a Consumer Group
 Create a new topic - **TestTopic2** with **2 partitions**:
 
 ![](./images/create-topic-in-kafdrop_1.png "Create a topic with two partitions")
@@ -83,11 +83,11 @@ ConsumerA - key: [apple] value: [this is message #8] partition: [1] offset: [8]
 ConsumerA - key: [apple] value: [this is message #9] partition: [1] offset: [9]
 ```
 
-> **Observation**: There are 2 partitions and one consumer.
+> **Observation**: There are two partitions and one consumer.
 > All the messages have the same partitioning key as `apple` so all the messages go to only one of the two partitions (in this case to partition 1).
 > And since there is only one consumer, the partition is assigned to ConsumerA and hence ConsumerA receives all the messages.
 
-## Case 3 : One Partition and Two Consumers in One Consumer Group
+## Case 3 : One Partition, Two Consumers in Same Consumer Group
 Create a new topic - **TestTopic3** with **1 partition**:
 
 ![](./images/create-topic-in-kafdrop_2.png "Create a topic with two partitions")
@@ -109,23 +109,23 @@ Consumer consumerB = new Consumer("ConsumerB", BOOTSTRAP_SERVERS, consumerGroup1
 Output:
 
 ```
-ConsumerA - key: [apple] value: [this is message #0] partition: [1] offset: [0]
-ConsumerA - key: [apple] value: [this is message #1] partition: [1] offset: [1]
-ConsumerA - key: [apple] value: [this is message #2] partition: [1] offset: [2]
-ConsumerA - key: [apple] value: [this is message #3] partition: [1] offset: [3]
-ConsumerA - key: [apple] value: [this is message #4] partition: [1] offset: [4]
-ConsumerA - key: [apple] value: [this is message #5] partition: [1] offset: [5]
-ConsumerA - key: [apple] value: [this is message #6] partition: [1] offset: [6]
-ConsumerA - key: [apple] value: [this is message #7] partition: [1] offset: [7]
-ConsumerA - key: [apple] value: [this is message #8] partition: [1] offset: [8]
-ConsumerA - key: [apple] value: [this is message #9] partition: [1] offset: [9]
+ConsumerA - key: [apple] value: [this is message #0] partition: [0] offset: [0]
+ConsumerA - key: [apple] value: [this is message #1] partition: [0] offset: [1]
+ConsumerA - key: [apple] value: [this is message #2] partition: [0] offset: [2]
+ConsumerA - key: [apple] value: [this is message #3] partition: [0] offset: [3]
+ConsumerA - key: [apple] value: [this is message #4] partition: [0] offset: [4]
+ConsumerA - key: [apple] value: [this is message #5] partition: [0] offset: [5]
+ConsumerA - key: [apple] value: [this is message #6] partition: [0] offset: [6]
+ConsumerA - key: [apple] value: [this is message #7] partition: [0] offset: [7]
+ConsumerA - key: [apple] value: [this is message #8] partition: [0] offset: [8]
+ConsumerA - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
-> **Observation**: There is 1 partition and two consumers.
-> All the messages have the same key as `apple` so all the messages go to only one of the two partitions (in this case to partition 1).
-> The partition is assigned to one of ConsumerA and ConsumerB. In this case ConsumerA receives all the messages.
+> **Observation**: There is one partition and two consumers.
+> This partition would be assigned to only one consumer and the other consumer will stay idle.
+> In this case ConsumerA received all the messages and ConsumerB remained idle.
 
-## Case 4 : Two Partitions and Two Consumers in One Consumer Group
+## Case 4 : Two Partitions, Two Consumers in Same Consumer Group
 Create a new topic - **TestTopic4** with **2 partitions**:
 
 ![](./images/create-topic-in-kafdrop_3.png "Create a topic with two partitions")
@@ -169,13 +169,13 @@ ConsumerB - key: [apple6] value: [this is message #6] partition: [1] offset: [4]
 ConsumerB - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 ```
 
-> **Observation**: There are 2 partitions and two consumers. Each message has a different key.
+> **Observation**: There are two partitions and two consumers. Each message has a different key.
 > Each message goes to either of two partitions (0 or 1 based on the partitioning logic).
 > Partition 0 is assigned to ConsumerA and Partition 1 is assigned to ConsumerB.
 > So ConsumerA gets all the messages from Partition 0 and
 > ConsumerB gets all the messages from Partition 1.
 
-## Case 5 : One Partition and Two Consumers in Different Consumer Groups
+## Case 5 : One Partition, Two Consumers in Different Consumer Groups
 Create a new topic - **TestTopic5** with **1 partition**:
 
 ![](./images/create-topic-in-kafdrop_4.png "Create a topic with two partitions")
@@ -224,7 +224,7 @@ ConsumerB - key: [apple] value: [this is message #8] partition: [0] offset: [8]
 ConsumerB - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
-> **Observation**: There is 1 partition and two consumers in different Consumer Groups.
+> **Observation**: There is one partition and two consumers in different Consumer Groups.
 > All the messages have the same key.
 > In this case all the 10 messages will be read by both ConsumerA and ConsumerB because they belong to different Consumer Groups.
 > The ordering of the messages is guaranteed in both Consumers because the key is same for each message.
