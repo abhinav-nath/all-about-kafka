@@ -225,6 +225,6 @@ ConsumerB - key: [apple] value: [this is message #9] partition: [0] offset: [9]
 ```
 
 > **Observation**: There is one partition and two consumers in different Consumer Groups.
-> All the messages have the same key.
+> All messages have the same key.
 > In this case all the 10 messages will be read by both ConsumerA and ConsumerB because they belong to different Consumer Groups.
 > The ordering of the messages is guaranteed in both Consumers because the key is same for each message.
