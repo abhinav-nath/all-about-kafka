@@ -169,7 +169,7 @@ ConsumerB - key: [apple6] value: [this is message #6] partition: [1] offset: [4]
 ConsumerB - key: [apple8] value: [this is message #8] partition: [1] offset: [5]
 ```
 
-> **Observation**: There are 2 partition and two consumers. Each message has a different key.
+> **Observation**: There are 2 partitions and two consumers. Each message has a different key.
 > Each message goes to either of two partitions (0 or 1 based on the partitioning logic).
 > Partition 0 is assigned to ConsumerA and Partition 1 is assigned to ConsumerB.
 > So ConsumerA gets all the messages from Partition 0 and
