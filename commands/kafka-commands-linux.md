@@ -105,6 +105,12 @@ kafka-consumer-groups --bootstrap-server localhost:9092 --list
 kafka-consumer-groups --bootstrap-server localhost:9092 --describe --group console-consumer-27773
 ```
 
+### Delete Consumer Group
+
+```shell
+kafka-consumer-groups --bootstrap-server localhost:9092 --delete --group my-group --group my-other-group
+```
+
 ### View the Commit Log
 
 ```shell
