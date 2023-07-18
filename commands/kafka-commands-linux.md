@@ -24,7 +24,7 @@ kafka-server-start ../config/server.properties
 ### Create a topic
 
 ```shell
-kafka-topics --create --topic test-topic -zookeeper localhost:2181 --replication-factor 1 --partitions 4
+kafka-topics --create --topic test-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4
 ```
 
 ### Create a Console Producer
@@ -64,7 +64,7 @@ kafka-console-consumer --bootstrap-server localhost:9092 --topic test-topic --gr
 ### List the topics in a cluster
 
 ```shell
-kafka-topics --zookeeper localhost:2181 --list
+kafka-topics --list --bootstrap-server localhost:9092
 ```
 
 ### Describe topic
@@ -72,25 +72,25 @@ kafka-topics --zookeeper localhost:2181 --list
 **Describe all the topics:**
 
 ```shell
-kafka-topics --zookeeper localhost:2181 --describe
+kafka-topics --describe --bootstrap-server localhost:9092
 ```
 
 **Describe a specific topic:**
 
 ```shell
-kafka-topics --zookeeper localhost:2181 --describe --topic <topic-name>
+kafka-topics --bootstrap-server localhost:9092 --describe --topic <topic-name>
 ```
 
 **Alter the min insync replica:**
 
 ```shell
-kafka-topics --alter --zookeeper localhost:2181 --topic library-events --config min.insync.replicas=2
+kafka-topics --alter --bootstrap-server localhost:9092 --topic library-events --config min.insync.replicas=2
 ```
 
 ### Delete a topic
 
 ```shell
-kafka-topics --zookeeper localhost:2181 --delete --topic <topic-name>
+kafka-topics --bootstrap-server localhost:9092 --delete --topic <topic-name>
 ```
 
 ### View consumer groups
@@ -120,5 +120,5 @@ kafka-run-class kafka.tools.DumpLogSegments --deep-iteration --files /tmp/kafka-
 ### Setting the Minimum Insync Replica
 
 ```shell
-kafka-configs --alter --zookeeper localhost:2181 --entity-type topics --entity-name test-topic --add-config min.insync.replicas=2
+kafka-configs --alter --bootstrap-server localhost:9092 --entity-type topics --entity-name test-topic --add-config min.insync.replicas=2
 ```
