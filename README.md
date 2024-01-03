@@ -8,3 +8,8 @@ Code:
 - [Kafka Avro Producer and Consumer](./code/avro-producer-and-consumer)
 - [Consumer Error Handling](./code/consumer-error-handling)
 - [Library Events](./code/libraryevents)
+
+---
+<p align="center">
+  ⭐ Star this repository — it helps!
+</p>
